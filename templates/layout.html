@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <title>Find a Food!</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+  <div class="page container d-flex flex-column min-vh-100">
+    {% block content %}{% endblock %}
+
+    <footer class="mt-auto p-5 text-center">
+      <small>Jean Choi &copy; 2020</small>
+    </footer>
+  </div>
+
+</html>

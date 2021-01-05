@@ -1,0 +1,77 @@
+{% extends "layout.html" %} 
+{% block content %}
+  <h1 class="text-center mt-5 mb-3">Item Information</h1>
+  {% if results %}
+  <h2 class="text-center m-3">Nutritional information for: <span class="highlight">{{results.foods[0].food_name}}</span></h1>
+    <div class="container">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Item Name</td>
+            <td>{{results.foods[0].food_name}}</td>
+          </tr>
+          <tr>
+            <td>Brand Name</td>
+            <td>{{results.foods[0].brand_name}}</td>
+          </tr>
+          <tr>
+            <td>Suggested serving</td>
+            <td>{{results.foods[0].serving_qty}} {{results.foods[0].serving_unit}}</td>
+          </tr>
+          <tr>
+            <td>Serving weight (grams)</td>
+            <td>{{results.foods[0].serving_weight_grams}}</td>
+          </tr>
+          <tr>
+            <td>Calories</td>
+            <td>{{results.foods[0].nf_calories}} kcal</td>
+          </tr>
+          <tr>
+            <td>Total Fat</td>
+            <td>{{results.foods[0].nf_total_fat}} g</td>
+          </tr>
+          <tr>
+            <td>Saturated Fat</td>
+            <td>{{results.foods[0].nf_saturated_fat}} g</td>
+          </tr>
+          <tr>
+            <td>Cholesterol</td>
+            <td>{{results.foods[0].nf_cholesterol}} mg</td>
+          </tr>
+          <tr>
+            <td>Sodium</td>
+            <td>{{results.foods[0].nf_sodium}} mg</td>
+          </tr>
+          <tr>
+            <td>Total Carbohydrate</td>
+            <td>{{results.foods[0].nf_total_carbohydrate}} g</td>
+          </tr>
+          <tr>
+            <td>Dietary Fiber</td>
+            <td>{{results.foods[0].nf_dietary_fiber}} g</td>
+          </tr>
+          <tr>
+            <td>Sugars</td>
+            <td>{{results.foods[0].nf_sugars}} g</td>
+          </tr>
+          <tr>
+            <td>Protein</td>
+            <td>{{results.foods[0].nf_protein}} g</td>
+          </tr>
+          <tr>
+            <td>Potassium</td>
+            <td>{{results.foods[0].nf_potassium}} mg</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p>Uh-Oh, cannot find {{item_name}}. Please try again.</p>
+  {% endif %}
+{% endblock %}

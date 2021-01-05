@@ -1,0 +1,57 @@
+{% extends "layout.html" %} 
+{% block content %}
+  <h1 class="text-center mt-5 mb-3">Search Results:</h1>
+  <a class="float btn btn-primary" href="/" role="button">Back to Search</a>
+  <div class="container">
+  {% if results.common|length > 0 and results.branded|length > 0 %}
+    <h2 class="text-center mt-3">You searched for: <span class="highlight">{{searchterm}}</span></h2>
+
+    <!---------------->
+    <div class="card-deck">
+      {% for result in results.common %} 
+        <div class="card">
+          <img class="card-img-top" src="{{result.photo.thumb}}" alt="Card image cap">
+          <div class="card-body">
+            <p class="card-text"><strong>Item name:</strong> {{result.food_name}}<p>
+            <p class="card-text"><strong>Serving:</strong> {{result.serving_qty}} {{result.serving_unit}}<p>
+          </div>
+          <div class="card-footer">
+            <form action="{{ url_for('details') }}" method="post">
+              <input name="item_name" value="{{result.food_name}}" hidden>
+              <input class="btn btn-primary" type="submit" value="See nutrition" />
+            </form>
+          </div>
+        </div>
+      {%endfor%} 
+    </div>
+
+    <!---------------------------------------------->
+    <h3 class="text-center m-5">Brand Results:</h3>
+    <div class="card-deck">
+      {% for result in results.branded %} 
+        <div class="card">
+          <img class="card-img-top" src="{{result.photo.thumb}}" alt="Card image cap">
+          <div class="card-body">
+            <p class="card-text"><strong>Brand:</strong> {{result.brand_name}}<p>
+            <p class="card-text"><strong>Item name:</strong> {{result.brand_name_item_name}}<p>
+            <p class="card-text"><strong>Serving:</strong> {{result.serving_qty}} {{result.serving_unit}}<p>
+          </div>
+          <div class="card-footer">
+            <form action="{{ url_for('brand', item_id=result.nix_item_id) }}" method="get">
+              <input class="btn btn-primary" type="submit" value="See nutrition" />
+            </form>
+          </div>
+        </div>
+      {%endfor%} 
+    </div>
+
+    <!---------------------------------------------->
+
+  {% else %}
+    <div class="alert alert-danger" role="alert">
+      Cannot find this food, please try again!
+    </div>
+  {% endif %}
+  </div>
+
+{% endblock %}
