@@ -1,5 +1,5 @@
 <!-- omit in toc -->
-# nutrition_app
+# Nutrition Application
 
 [Deployed Site](https://final-adiio67efa-uw.a.run.app/)
 
