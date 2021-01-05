@@ -1,7 +1,7 @@
 <!-- omit in toc -->
 # nutrition_app
 
-Link to site: [Site](https://example.com)
+[Deployed Site](https://final-adiio67efa-uw.a.run.app/)
 
 This is a toy application that performs a search against the Nutritionix API to display the nutritional information about a specific food.
 
