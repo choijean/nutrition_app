@@ -14,17 +14,12 @@ This is a toy application that performs a search against the Nutritionix API to 
 - [Deploy 🚀](#deploy-)
   - [Development 📝](#development-)
   - [Production 🖥](#production-)
+    - [Docker](#docker)
+    - [Cloud Registry](#cloud-registry)
+  - [Teardown](#teardown)
 - [Contributing 👥](#contributing-)
 - [Authors & Acknowledgements ✍](#authors--acknowledgements-)
 - [License 📄](#license-)
-- [CHEAT SHEET](#cheat-sheet)
-  - [Text](#text)
-  - [Lists & Tables](#lists--tables)
-  - [Code formatting](#code-formatting)
-  - [Links](#links)
-  - [Embedded Images](#embedded-images)
-    - [Pure Markdown](#pure-markdown)
-    - [HTML](#html)
 
 ## Features ✨
 
@@ -38,10 +33,8 @@ This is a toy application that performs a search against the Nutritionix API to 
 - [Python3](https://www.python.org)
 - [Flask](https://flask.palletsprojects.com/en/1.1.x/)
 - [Jinja2](https://palletsprojects.com/p/jinja/)
-- [Google Cloud Run](https://cloud.google.com/run)
-- [Google Cloud Container Registry](https://cloud.google.com/container-registry)
-- [Google Cloud Build](https://cloud.google.com/cloud-build)
 - [Docker](https://hub.docker.com/)
+- [Google Cloud Run](https://cloud.google.com/run), [Google Cloud Container Registry](https://cloud.google.com/container-registry), [Google Cloud Build](https://cloud.google.com/cloud-build)
 
 ## Getting Started 🛠
 
@@ -55,6 +48,8 @@ cd nutrition_app
 Create an account at [Nutritionix API](https://developer.nutritionix.com). You will need to keep note of your **Application ID** as well as your **Application Key**
 
 Create a [Docker](https://hub.docker.com/) account.
+
+Visit [Google Cloud Platform Console](https://console.cloud.google.com) and login to enable GCP.
 
 ## Deploy 🚀
 
@@ -97,6 +92,38 @@ git clone git@github.com:choijean/nutrition_app.git
 cd nutrition_app
 ```
 
+#### Docker
+
+First we build the Docker container and tag it. We also need to login to Docker. Then, we tag the image with our Docker ID. Finally, we can push the image to Docker Hub. Run the following as separate commands.
+
+```shell
+docker build -t nutritionapp .
+docker login
+docker tag final <DOCKER_USERNAME>/nutritionapp
+docker push <DOCKER_USERNAME>/nutritionapp
+```
+
+#### Cloud Registry
+
+We are going to build the container using [Google Cloud Build](https://cloud.google.com/cloud-build) and then push it to [Google Cloud Container Registry](https://cloud.google.com/container-registry) instead of building and running a DockerHub image.
+
+```shell
+gcloud builds submit --tag gcr.io/${GOOGLE_CLOUD_PROJECT}/nutritionapp
+gcloud run deploy nutritionapp \
+--image gcr.io/${GOOGLE_CLOUD_PROJECT}/nutritionapp \
+--update-env-vars NIX_APP_ID=<YOUR_NUTRITIONIX_APP_ID,NIX_API_KEY=<YOUR_NUTRITIONIX_API_KEY>
+```
+
+Finally, navigate to the provide URL to see the deployed application.
+
+### Teardown
+
+The easiest way to take down the application is to delete the entire GCP project.
+
+```shell
+gcloud projects delete <PROJECT_ID_OR_NUMBER>
+```
+
 ## Contributing 👥
 
 This is a toy application so I am not taking any contributions.
@@ -107,99 +134,4 @@ Written by [Jean Choi](https://www.github.com/choijean)
 
 ## License 📄
 
-This code is licensed under [MIT](https://opensource.org/licenses/MIT)
-<!-------------------------------------------------------------->
-
-## CHEAT SHEET
-
-### Text
-
-This is *italic* text.
-
-This is **bold** text.
-
-This is ***bold and italic*** text.
-
-This is ~~strike through~~ text.
-
-This is a [link](example.com)
-
-This is an email <jeanchoiii@gmail.com>
-
-[emojis](https://unicode.org/emoji/charts/full-emoji-list.html) are valid! Press `Ctrl + Cmd + Space` to open emoji keyboard on MacOS.
-
-> This is
->
-> a block quote
-
----
-
-### Lists & Tables
-
-- [x] Banana
-- [x] Apple
-- [ ] Durian
-
-1. First item
-2. Second item
-   1. Second item's child
-
-- First item
-- Second item
-  - Second item's child
-
-1. First item
-   - I don't have an order!
-
-- First item
-  1. I have an order!
-
-| Left | Center  | Right |
-| :--- | :-----: | ----: |
-| Hi   |  Hola   |  안녕 |
-| Ciao | Bonjour | Aloha |
-
----
-
-### Code formatting
-
-in-line code: `print("This is code")`
-
-syntax highlighted block code:
-
-```json
-{
-  "note": "this is json specific code"
-}
-```
-
----
-
-### Links
-
-Section [link](https://google.com)
-
-Relative path [link](path/to/file/readme.md)
-
----
-
-### Embedded Images
-
-#### Pure Markdown
-
-From external resource:
-![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
-
-From relative path:
-![relative image](images/pigeon.png)
-
-#### HTML
-
-From external resource:
-
-- Advantage: can customize properties
-- Disadvantage: Use of HTML is not ideal
-
-<p align="center">
-  <img src="https://octodex.github.com/images/yaktocat.png" title="Yaktocat"  width="40%" >
-</p>
+This code is licensed under [MIT](https://opensource.org/licenses/MIT).
